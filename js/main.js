@@ -48,15 +48,14 @@ function init() {
       package: WalletConnectProvider,
       options: {
         // Mikko's test key - don't copy as your mileage may vary
-        infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
-      }
-    },
-
-    fortmatic: {
-      package: Fortmatic,
-      options: {
-        // Mikko's TESTNET api key
-        key: "pk_test_391E26A3B43A3350"
+        infuraId: "",
+        rpc: {
+            1: "https://cloudflare-eth.com",
+            42161: "https://rpc.ankr.com/arbitrum",
+            421611: "https://rinkeby.arbitrum.io/rpc",
+            136: "https://polygon-rpc.com",
+            80001: "https://matic-mumbai.chainstacklabs.com"
+        }
       }
     }
   };
