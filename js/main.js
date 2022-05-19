@@ -1,34 +1,22 @@
 "use strict";
 
-/**
- * Example JavaScript code that interacts with the page and Web3 wallets
- */
-
  // Unpkg imports
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
-const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
 //const iid = process.env.INFURA_ID;
 // Web3modal instance
 let web3Modal
-
 // Chosen wallet provider given by the dialog window
 let provider;
-
-
 // Address of the selected account
 let selectedAccount;
 
 
-/**
- * Setup the orchestra
- */
 function init() {
 
   console.log("WalletConnectProvider is", WalletConnectProvider);
-  console.log("Fortmatic is", Fortmatic);
-  console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
+  console.log( "window.ethereum is", window.ethereum);
 
   // Check that the web page is run in a secure context,
   // as otherwise MetaMask won't be available
@@ -69,9 +57,11 @@ function init() {
   console.log("Web3Modal instance is", web3Modal);
 }
 
-const welcomedetails = document.querySelector("#welcome-details");
-
-
+const welcomedetails = document.getElementById("welcome-details");
+const walletinfodisconnect = document.getElementById("wallet-info-disconnect");
+const cowdescription = document.getElementById("cow-description");
+const connected = document.getElementById("connected");
+const preapare = document.getElementById("prepare");
 /**
  * Kick in the UI action after Web3modal dialog has chosen a provider
  */
@@ -121,8 +111,8 @@ async function fetchAccountData() {
 
   // Display fully loaded UI for wallet data
   document.querySelector("#prepare").style.display = "none";
-  document.querySelector("#connected").style.display = "block";
-  welcomedetails.style.display = "none";
+  //document.querySelector("#connected").style.display = "block";
+  connected.classList.remove("d-none");
 }
 
 
@@ -135,19 +125,19 @@ async function fetchAccountData() {
  */
 async function refreshAccountData() {
 
-  // If any current data is displayed when
-  // the user is switching acounts in the wallet
-  // immediate hide this data
-  document.querySelector("#connected").style.display = "none";
-  document.querySelector("#prepare").style.display = "block";
+  // // If any current data is displayed when
+  // // the user is switching acounts in the wallet
+  // // immediate hide this data
+  // document.querySelector("#connected").style.display = "none";
+  // document.querySelector("#prepare").style.display = "block";
 
-  // Disable button while UI is loading.
-  // fetchAccountData() will take a while as it communicates
-  // with Ethereum node via JSON-RPC and loads chain data
-  // over an API call.
-  document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
-  await fetchAccountData(provider);
-  document.querySelector("#btn-connect").removeAttribute("disabled")
+  // // Disable button while UI is loading.
+  // // fetchAccountData() will take a while as it communicates
+  // // with Ethereum node via JSON-RPC and loads chain data
+  // // over an API call.
+  // document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
+  // await fetchAccountData(provider);
+  // document.querySelector("#btn-connect").removeAttribute("disabled")
 }
 
 
@@ -156,6 +146,12 @@ async function refreshAccountData() {
  */
 async function onConnect() {
 
+  walletinfodisconnect.classList.remove("d-none");
+  welcomedetails.classList.add("d-none");
+  cowdescription.classList.add("d-none");
+  connected.classList.remove("d-none");
+  preapare.classList.add("d-none");
+
   console.log("Opening a dialog", web3Modal);
   try {
     provider = await web3Modal.connect();
@@ -163,7 +159,7 @@ async function onConnect() {
     console.log("Could not get a wallet connection", e);
     return;
   }
-
+  fetchAccountData()
   // Subscribe to accounts change
   provider.on("accountsChanged", (accounts) => {
     fetchAccountData();
@@ -204,10 +200,14 @@ async function onDisconnect() {
   selectedAccount = null;
 
   // Set the UI back to the initial state
-  document.querySelector("#prepare").style.display = "block";
+  // document.querySelector("#prepare").style.display = "block";
   document.querySelector("#connected").style.display = "none";
-  
-  welcomedetails.style.display = "none";
+
+  walletinfodisconnect.classList.add("d-none");
+  welcomedetails.classList.remove("d-none");
+  cowdescription.classList.remove("d-none");
+  connected.classList.add("d-none");
+  preapare.classList.remove("d-none");
 }
 
 

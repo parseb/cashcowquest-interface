@@ -15,6 +15,21 @@
 
   <body>
     <div class="container">
+      <div class="row d-none" id="wallet-info-disconnect">
+        <div class="col-8">
+          <div class="block d-inline-block">
+            <p>
+              <span class="border border-dark py-2"><strong>Network:</strong> <span id="network-name"></span></span>
+              <span class="border border-dark py-2"><strong>Selected account:</strong> <span id="selected-account"></span></span>
+            </p>
+          </div>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-outline-dark float-end" id="btn-disconnect">
+            Disconnect wallet
+          </button>
+        </div>
+      </div>
      <div class="row">
        <br>
        <br>
@@ -29,7 +44,7 @@
 
      </div>
      <hr />
-     <div class="row" id="description">
+     <div class="row" id="cow-description">
        <div class="col-2"></div>
        <div class="col-8">
          <p class="text font-monospace">
@@ -37,8 +52,9 @@
          </p>
        </div>
        <div class="col-2"></div>
+       <hr />
      </div>
-     <hr />
+
 
      <div class="row">
       <div class="col-md-12">
@@ -47,6 +63,7 @@
         </div> -->
 
         <div id="prepare" class="text-center">
+          <br>
           <button class="btn btn-outline-dark border-1" id="btn-connect">
             <span class="fs-3">
               🔗👛
@@ -58,40 +75,7 @@
           </button>
         </div>
 
-        <div id="connected" style="display: none">
-
-          <button class="btn btn-outline-warning" id="btn-connect">
-            Disconnect wallet
-          </button>
-
-          <hr>
-
-          <div id="network">
-            <p>
-              <strong>Connected blockchain:</strong> <span id="network-name"></span>
-            </p>
-
-            <p>
-              <strong>Selected account:</strong> <span id="selected-account"></span>
-            </p>
-
-          </div>
-
-          <hr>
-
-          <h3>All account balances</h3>
-
-          <table class="table table-listing">
-            <thead>
-              <th>Address</th>
-              <th>ETH balance</th>
-            </thead>
-
-            <tbody id="accounts">
-            </tbody>
-          </table>
-
-          <p>Please try to switch between different accounts in your wallet if your wallet supports this functonality.</p>
+        <div id="connected" class="d-none">
 
         </div>
 
@@ -100,7 +84,7 @@
     </div>
     <hr />
   
-    <section id="welcome-details">
+    <div id="welcome-details">
       <div class="row">
         <div class="container">                      
           <div class="row text-center justify-content-center mb-5">
@@ -149,7 +133,7 @@
           </div>
         </div>
       </div>
-      <hr />Disco
+      <hr />
         <div class="container">
           <h3 class="font-weight-bold text-center"> Do you have what it takes? </h3>
           <div class="text-center">
@@ -161,13 +145,13 @@
         
       </div>
   
-    </section>
-
-
-
     </div>
 
-    <footer class="footer mt-auto py-2 bg-light fixed-bottom">
+
+
+
+
+    <footer class="footer mt-auto py-2  bg-light fixed-bottom">
       <div class="container">      
         Made with <span style="color: #e25555;">&hearts;</span> by <a class="text-decoration-none" href="https://github.com/parseb">parseb</a>
 
