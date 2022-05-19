@@ -9,7 +9,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
-
+//const iid = process.env.INFURA_ID;
 // Web3modal instance
 let web3Modal
 
@@ -32,13 +32,13 @@ function init() {
 
   // Check that the web page is run in a secure context,
   // as otherwise MetaMask won't be available
-  if(location.protocol !== 'https:') {
-    // https://ethereum.stackexchange.com/a/62217/620
-    const alert = document.querySelector("#alert-error-https");
-    alert.style.display = "block";
-    document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
-    return;
-  }
+  // if(location.protocol !== 'https:') {
+  //   // https://ethereum.stackexchange.com/a/62217/620
+  //   const alert = document.querySelector("#alert-error-https");
+  //   alert.style.display = "block";
+  //   document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
+  //   return;
+  // }
 
   // Tell Web3modal what providers we have available.
   // Built-in web browser provider (only one can exist as a time)
@@ -69,6 +69,8 @@ function init() {
   console.log("Web3Modal instance is", web3Modal);
 }
 
+const welcomedetails = document.querySelector("#welcome-details");
+
 
 /**
  * Kick in the UI action after Web3modal dialog has chosen a provider
@@ -77,12 +79,8 @@ async function fetchAccountData() {
 
   // Get a Web3 instance for the wallet
   const web3 = new Web3(provider);
-
   console.log("Web3 instance is", web3);
-
-  // Get connected chain id from Ethereum node
   const chainId = await web3.eth.getChainId();
-  // Load chain information over an HTTP API
   const chainData = evmChains.getChain(chainId);
   document.querySelector("#network-name").textContent = chainData.name;
 
@@ -124,6 +122,7 @@ async function fetchAccountData() {
   // Display fully loaded UI for wallet data
   document.querySelector("#prepare").style.display = "none";
   document.querySelector("#connected").style.display = "block";
+  welcomedetails.style.display = "none";
 }
 
 
@@ -207,6 +206,8 @@ async function onDisconnect() {
   // Set the UI back to the initial state
   document.querySelector("#prepare").style.display = "block";
   document.querySelector("#connected").style.display = "none";
+  
+  welcomedetails.style.display = "none";
 }
 
 
