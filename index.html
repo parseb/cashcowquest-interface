@@ -76,7 +76,130 @@
         </div>
 
         <div id="connected" class="d-none">
-          div
+          <div class="row" id="accordeon">
+            <!------------------ accordeon start ------------------>
+            <div class="col-12">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Propose Cow
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <div class="create-form form form-control">
+                                              <!-- project token-->
+                      <div class="input-group mb-3">
+                        <label for="yp-address" class="form-label p-1 m-1">Your ERC20 Contract</label><br>
+                        <input type="text" class="form-control" onchange="ypContractAddressChanged()" id="yp-address" placeholder="You project's (YP) ERC20 address" aria-label="yp_address" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="yp-symbol">ERC20 name</span>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                                                <!-- amount pt-->
+                      <div class="input-group mb-3">
+                        <label for="yp-amount" class="form-label p-1 m-1">Offer Amount </label><br>
+                        <input type="number"  class="form-control" id="yp-amount" onchange="ypAmChanged()" placeholder="YP amount for sale" aria-label="yp_amount" aria-describedby="yp_erc20"">
+                        <span class="input-group-text text-danger" id="yp-approved">amount approved</span>
+                      </div>
+                        </div>
+                        <div class="col-6">
+                                               <!-- amount DAI-->
+                        <div class="input-group mb-3">
+                          <label for="dai-amount" class="form-label p-1 m-1">Wanted Amount</label><br>
+                          <input type="number" class="form-control" id="dai-amount" placeholder="DAI amount wanted" aria-label="dai_amount" aria-describedby="basic-addon2">
+                          <span class="input-group-text" id="dai-create">DAI contract</span>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <label for="vest_start" class="form-label">Vest Start Date</label>
+                          <input class="form-control" type="number" placeholder="Vest Start or Liquidation Eligibility in Days after minting" id="vest_start">
+                        </div>
+                        <div class="col-6">  
+                          <label for="vest_end" class="form-label">Vest End Date</label>
+                          <input class="form-control" type="number" placeholder="Fully Matures in days after Vest Start" id="vest_end">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label"><b>Project Description File</b></label>
+                          <input class="form-control" type="file" id="formFile">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <button class="btn btn-dark" onclick="submittedCreateCow()">
+                          Propose Cow
+                        </button>
+                      </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Mint Cow
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" >
+
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Vest Cow
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Heard View
+                    </button>
+                  </h2>
+                  <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body overflow-scroll">
+                      <div class="container d-inline">
+                        <table class="table table-light overflow-auto">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Proposer</th>
+                              <th scope="col">Taker</th>
+                              <th scope="col">Project ERC20</th>
+                              <th scope="col">Liquidity Pool ERC20</th>
+                              <th scope="col">Offerring</th>
+                              <th scope="col">Value</th>
+                              <th scope="col">LP Balance</th>
+                              <th scope="col">Vest/Liquidate</th>
+                              <th scope="col">Vest End</th>
+                              <th scope="col">Deal Description (IPFS#)</th>
+                            </tr>
+                        </thead>
+                            <tbody id="cowlisttable">
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!---------------------- end -------------->
+          </div>
         </div>
 
         <br>

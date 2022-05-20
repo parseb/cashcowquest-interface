@@ -1,7 +1,229 @@
 "use strict";
 
 const CCowAbi = [{"inputs":[{"internalType":"address","name":"_dai","type":"address"},{"internalType":"address","name":"_unifactory","type":"address"},{"internalType":"address","name":"_v2Router","type":"address"},{"internalType":"address","name":"_sweepTo","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"TokenTransferFailed","type":"error"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"VestingInProgress","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_dealId","type":"uint256"},{"indexed":true,"internalType":"address","name":"_token","type":"address"}],"name":"LiquidatedDeal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_token","type":"address"},{"indexed":true,"internalType":"uint256","name":"_Tempid","type":"uint256"}],"name":"NewDealProposed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amt","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bywhen","type":"uint256"}],"name":"NewVesting","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_Tempid","type":"uint256"},{"indexed":true,"internalType":"address","name":"_token","type":"address"},{"indexed":false,"internalType":"address","name":"_caller","type":"address"}],"name":"RefundedNoDeal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amt","type":"uint256"}],"name":"VestingCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"partialAmt","type":"uint256"}],"name":"WithdrewFromVest","type":"event"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"LiquidateDeal","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"VestDeal","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_projectToken","type":"address"},{"internalType":"uint256","name":"_giveAmountx100","type":"uint256"},{"internalType":"uint256","name":"_wantsAmountx100","type":"uint256"},{"internalType":"uint256","name":"_vestStart","type":"uint256"},{"internalType":"uint256","name":"_vestEnd","type":"uint256"},{"internalType":"string","name":"_pitchDataURL","type":"string"}],"name":"createDeal","outputs":[{"internalType":"uint256","name":"tId","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"}],"name":"getCashCowById","outputs":[{"components":[{"internalType":"address[4]","name":"owners","type":"address[4]"},{"internalType":"uint256[3]","name":"amounts","type":"uint256[3]"},{"internalType":"uint256[2]","name":"vestStartEnd","type":"uint256[2]"},{"internalType":"string","name":"data","type":"string"}],"internalType":"struct CashCow.Cow","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getK","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"address","name":"_beneficiary","type":"address"}],"name":"getVest","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"milkVest","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"}],"name":"reclaimNoTakers","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"sweeper","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"takeDeal","outputs":[{"internalType":"address","name":"pool","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tempId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"}]
- // Unpkg imports
+const ERC20Abi = [
+  {
+      "constant": true,
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+          {
+              "name": "",
+              "type": "string"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": false,
+      "inputs": [
+          {
+              "name": "_spender",
+              "type": "address"
+          },
+          {
+              "name": "_value",
+              "type": "uint256"
+          }
+      ],
+      "name": "approve",
+      "outputs": [
+          {
+              "name": "",
+              "type": "bool"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": false,
+      "inputs": [
+          {
+              "name": "_from",
+              "type": "address"
+          },
+          {
+              "name": "_to",
+              "type": "address"
+          },
+          {
+              "name": "_value",
+              "type": "uint256"
+          }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+          {
+              "name": "",
+              "type": "bool"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+          {
+              "name": "",
+              "type": "uint8"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "_owner",
+              "type": "address"
+          }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+          {
+              "name": "balance",
+              "type": "uint256"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+          {
+              "name": "",
+              "type": "string"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": false,
+      "inputs": [
+          {
+              "name": "_to",
+              "type": "address"
+          },
+          {
+              "name": "_value",
+              "type": "uint256"
+          }
+      ],
+      "name": "transfer",
+      "outputs": [
+          {
+              "name": "",
+              "type": "bool"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "_owner",
+              "type": "address"
+          },
+          {
+              "name": "_spender",
+              "type": "address"
+          }
+      ],
+      "name": "allowance",
+      "outputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "fallback"
+  },
+  {
+      "anonymous": false,
+      "inputs": [
+          {
+              "indexed": true,
+              "name": "owner",
+              "type": "address"
+          },
+          {
+              "indexed": true,
+              "name": "spender",
+              "type": "address"
+          },
+          {
+              "indexed": false,
+              "name": "value",
+              "type": "uint256"
+          }
+      ],
+      "name": "Approval",
+      "type": "event"
+  },
+  {
+      "anonymous": false,
+      "inputs": [
+          {
+              "indexed": true,
+              "name": "from",
+              "type": "address"
+          },
+          {
+              "indexed": true,
+              "name": "to",
+              "type": "address"
+          },
+          {
+              "indexed": false,
+              "name": "value",
+              "type": "uint256"
+          }
+      ],
+      "name": "Transfer",
+      "type": "event"
+  }
+] 
+// Unpkg imports
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const evmChains = window.evmChains;
@@ -25,6 +247,17 @@ const chainAddresses = {
   42161: {},
   421611: {},
   136: {}
+}
+
+const state = {
+  allCows:[],
+  daiApproved: 0,
+  ypApproved: 0,
+  ypContract: null,
+  provider: null,
+  web3: null,
+  cowContract: null,
+  signer: null,
 }
 
 function init() {
@@ -69,7 +302,6 @@ function init() {
   });
 
   console.log("Web3Modal instance is", web3Modal);
-
 }
 
 const welcomedetails = document.getElementById("welcome-details");
@@ -79,7 +311,13 @@ const connected = document.getElementById("connected");
 const preapare = document.getElementById("prepare");
 const rightcornerfooter = document.getElementById("right-corner-footer");
 const cashcowguru = document.getElementById("cashcowad");
+const cowtable = document.getElementById("cowlisttable");
 
+const daiamt = document.getElementById("dai-amount");
+const ypamount = document.getElementById("yp-amount");
+const ypaddress = document.getElementById("yp-address");
+const ypsymbol = document.getElementById("yp-symbol");
+const daicreate = document.getElementById("dai-create");
 
 /**
  * Kick in the UI action after Web3modal dialog has chosen a provider
@@ -104,9 +342,19 @@ async function fetchAccountData() {
   const contractname = await CCContract.methods.name().call();
   rightcornerfooter.textContent  = contractname;
 
-  
-  
+  const DAIcontract = new web3.eth.Contract(ERC20Abi, chainAddresses[chainId]["DAI"]);
+  // @todo - chain id sets DAI contract href - hardcoded mumbai
+  daicreate.innerHTML = `<a href="https://mumbai.polygonscan.com/address/${chainAddresses[chainId]["DAI"]}" target="_blank" class="text-decoration-none">DAI contract</a>`;
+  await retrieveAllCows(CCContract);  
+ 
 
+  state.web3 = web3;
+  state.chainId = chainId;
+  state.selectedAccount = selectedAccount;
+  state.cowAddress = chainAddresses[chainId]["CCContract"];
+  state.cowContract = CCContract;
+  
+  return web3, chainId, chainData, CCContract, DAIcontract, selectedAccount;
   // // Get a handl
   // const template = document.querySelector("#template-balance");
   // const accountContainer = document.querySelector("#accounts");
@@ -120,9 +368,7 @@ async function fetchAccountData() {
   //   // ethBalance is a BigNumber instance
   //   // https://github.com/indutny/bn.js/
   //   const ethBalance = web3.utils.fromWei(balance, "ether");
-  //   const humanFriendlyBalance = parseFloat(ethBalance).toFixed(4);
-  //   // Fill in the templated row and put in the document
-  //   const clone = template.content.cloneNode(true);
+  //   const humanFriendlyBalance = parseFloat(ethBalance).toFixed(4  await retrieveAllCows(); 
   //   clone.querySelector(".address").textContent = address;
   //   clone.querySelector(".balance").textContent = humanFriendlyBalance;
   //   accountContainer.appendChild(clone);
@@ -138,6 +384,103 @@ async function fetchAccountData() {
   // //document.querySelector("#connected").style.display = "block";
   // connected.classList.remove("d-none");
 }
+
+async function retrieveAllCows(C_contract) {
+  fetch("https://api.covalenthq.com/v1/80001/tokens/0x4A35E3C88438e8e6eEdB1Ea31fe34be2D4234200/nft_token_ids/?quote-currency=USD&format=JSON&page-number=&page-size=&key=ckey_dd30be32fd7244ebaf9cc39ae10")
+  .then(response => response.json()).then(data => {
+    console.log("covalent nft ids", data);
+    let index = parseInt(data.data.items.length -1);
+    data.data.items.forEach( async (item) => { 
+      console.log("this is in item", item)
+    let cow = await C_contract.methods.getCashCowById(item.token_id).call();
+    console.log("this is in cow", cow.token_id, cow);
+    state.allCows.push(cow);
+    document.getElementById("cowlisttable").innerHTML += `
+    <tr>
+    <th scope="row">${index+1}</th>
+    <td>${index}</td>
+    <td>${cow[0][1]}</td>
+    <td>${cow[0][2]}</td>
+    <td>${cow[0][3]}</td>
+    <td>${cow[1][0]}</td>
+    <td>${cow[1][1]}</td>
+    <td>${cow[1][2]}</td>
+    <td>${ new Date(parseInt(cow[2][0])).toLocaleDateString("en-US")}</td>
+    <td>${ new Date(parseInt(cow[2][1])).toLocaleDateString("en-US")}</td>
+    <td>${cow[3]}</td>
+  </tr>`;
+    index++;
+
+  })
+
+
+});
+}
+
+
+
+
+async function ypAmChanged() {
+  fetchUpdateCreateForm();
+}
+
+async function ypContractAddressChanged() {
+  setYPContract();
+  fetchUpdateCreateForm();
+}
+
+async function getDAIapproved(userAddress, cowAddress) {
+  let daiApproved = await DAIcontract.methods.allowance(userAddress,cowAddress).call()
+  state.daiApproved = daiApproved;
+  return daiApproved;  
+}
+
+async function setYPContract() {
+  let ypContract =  new state.web3.eth.Contract(ERC20Abi, ypaddress.value);
+  let tokenName = await ypContract.methods.name().call();
+  ypsymbol.innerHTML = `<a href="https://mumbai.polygonscan.com/address/${ypaddress.value}" target="_blank" class="text-decoration-none">${tokenName}</a>`;
+  state.ypContract = await ypContract;
+}
+
+async function getYPapproved(userAddress) {
+  let yp = ypaddress.value;
+  let ypApproved = await state.ypContract.methods.allowance(state.selectedAccount, state.cowAddress).call()
+  state.ypApproved = ypApproved;
+  return ypApproved;  
+}
+
+
+async function fetchUpdateCreateForm() {
+  // if (daiamt.value !=  state.daiApproved) {getDAIapproved(accounts[0], chainAddresses[chainId]["CCContract"]); }
+  if (ypamount.value !=  state.ypApproved) {
+    let ypapproved = document.getElementById("yp-approved");
+    getYPapproved().then( (amount) => {
+      if (amount >= ypamount.value) {
+      ypapproved.classList.replace("text-danger", "text-success"); 
+    } else {
+      ypapproved.innerText = `allowance: ${amount}`;
+    }
+    })
+  }
+} 
+
+async function submittedCreateCow(){
+  console.log("submitted Cow")
+  const ethersProvider =  new ethers.providers.Web3Provider(window.ethereum) 
+  let signer = ethersProvider.getSigner();
+  let cowContract = new ethers.Contract(state.cowAddress, CCowAbi, ethersProvider);
+
+  const newCow =  cowContract.connect(signer);
+  let veststart = document.getElementById("vest_start").value;
+  let vestend = document.getElementById("vest_end").value;
+  let tx =  newCow.createDeal(ypaddress.value, ypamount.value, daiamt.value, veststart, vestend, "ipfshash_CID_loremipsum");
+  console.log("enw cow tx", tx);
+  tx.then( (tx) => {
+    console.log("tx", tx);
+    alert("tx", tx);
+  });
+}
+
 
 
 async function getDisplayData(){}
@@ -184,6 +527,9 @@ async function onConnect() {
     console.log("Could not get a wallet connection", e);
     return;
   }
+
+  if (provider != null ) { state.provider = provider; } 
+
   fetchAccountData()
   // Subscribe to accounts change
   provider.on("accountsChanged", (accounts) => {
