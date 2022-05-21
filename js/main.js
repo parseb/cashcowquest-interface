@@ -1039,6 +1039,11 @@ const chainAddresses = {
     "DAI":  "0x001B3B4d0F3714Ca98ba10F6042DaEbF0B1B7b6F"
   },
   1: {},
+  137: {
+    "CCContract": "0x6951b5Bd815043E3F842c1b026b0Fa888Cc2DD85",
+    "DAI":  "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "VC": "0xe0aA552A10d7EC8760Fc6c246D391E698a82dDf9" 
+  },
   42161: {},
   421611: {
     "CCContract": "0x9D4722d668C4b790ab670c229c336389056615cb",
@@ -1226,7 +1231,7 @@ async function retrieveAllCows(C_contract) {
 }
 
 async function getFloatingCows(cowContract){
-
+  let reentrancyguardimfunatparties = false;
   console.log("getting floating cows...");
   let maxId = await cowContract.methods.tempId().call();
   let nonMintedIds = [];
@@ -1235,7 +1240,7 @@ async function getFloatingCows(cowContract){
   for(let i = 1; i <= maxId; i++){
     if (! mintedIDS.includes(i)) { nonMintedIds.push(i); }
   }
-
+  console.log("non minted ids", nonMintedIds);
   nonMintedIds.forEach(async (x) => {
     let c =await cowContract.methods.getCashCowById(x).call();
 
@@ -1275,6 +1280,9 @@ async function getFloatingCows(cowContract){
   `;
 
   floatingcowsplace.innerHTML += fcowtemplate;
+    } else if (! reentrancyguardimfunatparties) {
+       floatingcowsplace.innerHTML += `<p>Cows don't grow on trees. (none found, nothing personal)</p>`; 
+       reentrancyguardimfunatparties = true;
     }
 
 
@@ -1319,7 +1327,7 @@ async function fetchUpdateCreateForm() {
   // if (daiamt.value !=  state.daiApproved) {getDAIapproved(accounts[0], chainAddresses[chainId]["CCContract"]); }
   if (ypamount.value !=  state.ypApproved) {
     let ypapproved = document.getElementById("yp-approved");
-    getYPapproved().then( (amount) => {
+    getYPapproved(selectedAccount).then( (amount) => {
       if (parseInt(amount) >= parseInt(ypamount.value)) {
       ypapproved.classList.replace("text-danger", "text-success"); 
     } else {
