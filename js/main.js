@@ -1,6 +1,801 @@
 "use strict";
 
-const CCowAbi = [{"inputs":[{"internalType":"address","name":"_dai","type":"address"},{"internalType":"address","name":"_unifactory","type":"address"},{"internalType":"address","name":"_v2Router","type":"address"},{"internalType":"address","name":"_sweepTo","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"TokenTransferFailed","type":"error"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"VestingInProgress","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_dealId","type":"uint256"},{"indexed":true,"internalType":"address","name":"_token","type":"address"}],"name":"LiquidatedDeal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_token","type":"address"},{"indexed":true,"internalType":"uint256","name":"_Tempid","type":"uint256"}],"name":"NewDealProposed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amt","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bywhen","type":"uint256"}],"name":"NewVesting","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_Tempid","type":"uint256"},{"indexed":true,"internalType":"address","name":"_token","type":"address"},{"indexed":false,"internalType":"address","name":"_caller","type":"address"}],"name":"RefundedNoDeal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amt","type":"uint256"}],"name":"VestingCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"partialAmt","type":"uint256"}],"name":"WithdrewFromVest","type":"event"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"LiquidateDeal","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"VestDeal","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_projectToken","type":"address"},{"internalType":"uint256","name":"_giveAmountx100","type":"uint256"},{"internalType":"uint256","name":"_wantsAmountx100","type":"uint256"},{"internalType":"uint256","name":"_vestStart","type":"uint256"},{"internalType":"uint256","name":"_vestEnd","type":"uint256"},{"internalType":"string","name":"_pitchDataURL","type":"string"}],"name":"createDeal","outputs":[{"internalType":"uint256","name":"tId","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"}],"name":"getCashCowById","outputs":[{"components":[{"internalType":"address[4]","name":"owners","type":"address[4]"},{"internalType":"uint256[3]","name":"amounts","type":"uint256[3]"},{"internalType":"uint256[2]","name":"vestStartEnd","type":"uint256[2]"},{"internalType":"string","name":"data","type":"string"}],"internalType":"struct CashCow.Cow","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getK","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"address","name":"_beneficiary","type":"address"}],"name":"getVest","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"milkVest","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"}],"name":"reclaimNoTakers","outputs":[{"internalType":"bool","name":"s","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"sweeper","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_dealId","type":"uint256"}],"name":"takeDeal","outputs":[{"internalType":"address","name":"pool","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tempId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+const CCowAbi = [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_dai",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_unifactory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_v2Router",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_sweepTo",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokenTransferFailed",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "VestingInProgress",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "approved",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "ApprovalForAll",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_dealId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        }
+      ],
+      "name": "LiquidatedDeal",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_Tempid",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewDealProposed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amt",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "bywhen",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewVesting",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_Tempid",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "_caller",
+          "type": "address"
+        }
+      ],
+      "name": "RefundedNoDeal",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amt",
+          "type": "uint256"
+        }
+      ],
+      "name": "VestingCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "partialAmt",
+          "type": "uint256"
+        }
+      ],
+      "name": "WithdrewFromVest",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dealId",
+          "type": "uint256"
+        }
+      ],
+      "name": "LiquidateDeal",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "s",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dealId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VestDeal",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "s",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_projectToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_giveAmountx100",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_wantsAmountx100",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_vestStart",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_vestEnd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_pitchDataURL",
+          "type": "string"
+        }
+      ],
+      "name": "createDeal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "tId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "floatingCows",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "data",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getApproved",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCashCowById",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address[4]",
+              "name": "owners",
+              "type": "address[4]"
+            },
+            {
+              "internalType": "uint256[3]",
+              "name": "amounts",
+              "type": "uint256[3]"
+            },
+            {
+              "internalType": "uint256[2]",
+              "name": "vestStartEnd",
+              "type": "uint256[2]"
+            },
+            {
+              "internalType": "string",
+              "name": "data",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct CashCow.Cow",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getK",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_beneficiary",
+          "type": "address"
+        }
+      ],
+      "name": "getVest",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "isApprovedForAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dealId",
+          "type": "uint256"
+        }
+      ],
+      "name": "milkVest",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "s",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "reclaimNoTakers",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "s",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sweeper",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dealId",
+          "type": "uint256"
+        }
+      ],
+      "name": "takeDeal",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tempId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ];
 const ERC20Abi = [
   {
       "constant": true,
@@ -240,12 +1035,15 @@ let selectedAccount;
 
 const chainAddresses = {
   80001: {
-    "CCContract": "0x4A35E3C88438e8e6eEdB1Ea31fe34be2D4234200",
+    "CCContract": "0x4099cB63098976aFb78686CF40A7AC0138D5863F",
     "DAI":  "0x001B3B4d0F3714Ca98ba10F6042DaEbF0B1B7b6F"
   },
   1: {},
   42161: {},
-  421611: {},
+  421611: {
+    "CCContract": "0x9D4722d668C4b790ab670c229c336389056615cb",
+    "DAI":  "0xB47e6A5f8b33b3F17603C83a0535A9dcD7E32681" //WETH
+  },
   136: {}
 }
 
@@ -258,6 +1056,8 @@ const state = {
   web3: null,
   cowContract: null,
   signer: null,
+  floatingCows: [],
+  Mids: [],
 }
 
 function init() {
@@ -319,6 +1119,9 @@ const ypaddress = document.getElementById("yp-address");
 const ypsymbol = document.getElementById("yp-symbol");
 const daicreate = document.getElementById("dai-create");
 
+const floatingcowsplace = document.getElementById("floating-cows-place");
+const mintcowbutton = document.getElementById("mint-cow-button");
+
 /**
  * Kick in the UI action after Web3modal dialog has chosen a provider
  */
@@ -340,20 +1143,23 @@ async function fetchAccountData() {
 
   const CCContract = new web3.eth.Contract(CCowAbi, chainAddresses[chainId]["CCContract"]);
   const contractname = await CCContract.methods.name().call();
-  rightcornerfooter.textContent  = contractname;
+  rightcornerfooter.innerHTML  =  `<a class="text-decoration-none" href="https://github.com/parseb/cashcow-quest">${contractname}</a>`;
 
   const DAIcontract = new web3.eth.Contract(ERC20Abi, chainAddresses[chainId]["DAI"]);
   // @todo - chain id sets DAI contract href - hardcoded mumbai
   daicreate.innerHTML = `<a href="https://mumbai.polygonscan.com/address/${chainAddresses[chainId]["DAI"]}" target="_blank" class="text-decoration-none">DAI contract</a>`;
   await retrieveAllCows(CCContract);  
- 
+
 
   state.web3 = web3;
   state.chainId = chainId;
   state.selectedAccount = selectedAccount;
   state.cowAddress = chainAddresses[chainId]["CCContract"];
   state.cowContract = CCContract;
+  state.DAIcontract = DAIcontract;
   
+  await getFloatingCows(CCContract);
+
   return web3, chainId, chainData, CCContract, DAIcontract, selectedAccount;
   // // Get a handl
   // const template = document.querySelector("#template-balance");
@@ -386,11 +1192,15 @@ async function fetchAccountData() {
 }
 
 async function retrieveAllCows(C_contract) {
+  /// aware
   fetch("https://api.covalenthq.com/v1/80001/tokens/0x4A35E3C88438e8e6eEdB1Ea31fe34be2D4234200/nft_token_ids/?quote-currency=USD&format=JSON&page-number=&page-size=&key=ckey_dd30be32fd7244ebaf9cc39ae10")
   .then(response => response.json()).then(data => {
     console.log("covalent nft ids", data);
     let index = parseInt(data.data.items.length -1);
+
+    console.log("this is data.data.items", data.data.items);
     data.data.items.forEach( async (item) => { 
+      
       console.log("this is in item", item)
     let cow = await C_contract.methods.getCashCowById(item.token_id).call();
     console.log("this is in cow", cow.token_id, cow);
@@ -412,11 +1222,66 @@ async function retrieveAllCows(C_contract) {
     index++;
 
   })
-
-
 });
 }
 
+async function getFloatingCows(cowContract){
+
+  console.log("getting floating cows...");
+  let maxId = await cowContract.methods.tempId().call();
+  let nonMintedIds = [];
+  let mintedIDS = state.Mids.map(item => parseInt(item.token_id) );
+  console.log("state mids ", mintedIDS);
+  for(let i = 1; i <= maxId; i++){
+    if (! mintedIDS.includes(i)) { nonMintedIds.push(i); }
+  }
+
+  nonMintedIds.forEach(async (x) => {
+    let c =await cowContract.methods.getCashCowById(x).call();
+
+    let daiApproved = await getDAIapproved(state.selectedAccount, state.cowAddress);
+
+    console.log('this is floating cow--zzzZZXX', c);
+    if (c.owners[0] != "0x0000000000000000000000000000000000000000"
+    && c.owners[1] === "0x0000000000000000000000000000000000000000") {
+      const fcowtemplate = `
+      <div>
+      <hr class="bg-primary border-6 border-top">
+      <div class="row">
+    <div class="col-6 text-center"> Proposer: <br><span id="proposer"> ${c.owners[0]}</span> </div>
+    <div class="col-6 text-center">Taker: <br> <button class="btn btn-warning" id="mintcowbutton" onclick="takeMintDeal(${x})" >Mint Cow</button> </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-6 text-center">Offered ERC20:  <br> <span id="offer-erc20"> ${c.owners[2]}</span></div>
+    <div class="col-3 text-center">Tokens Offered:  <br> <span id="give"> ${c.amounts[0]}</span></div>
+    <div class="col-3 text-center">Tokens Wanted: <br> <span id="take">${c.amounts[1]}</span><br> (to approve <a href="https://mumbai.polygonscan.com/address/${chainAddresses[state.chainId]["DAI"]}" target="_blank" class="text-decoration-none">DAI</a>:) ${(parseInt(daiApproved) > parseInt(c.amounts[1])) ? 0 : c.amounts[1]} )</div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-3 text-center">
+      Vest/Liquidate in Days <br><span id="vest-liq">${c.vestStartEnd[0]} </span></div>
+    
+    <div class="col-3 text-center">
+      Fully vests by <br> <span id="vest-by">${c.vestStartEnd[1]}</span></div>
+    
+    <div class="col-3 text-center">
+      <a href="http://ipfs.io" class="text-decoration-none"> pitch deck link #IPFS </a>
+    </div>
+  </div>
+  <hr class="bg-primary border-6 border-top">
+  </div>
+  <br>
+  `;
+
+  floatingcowsplace.innerHTML += fcowtemplate;
+    }
+
+
+    });
+  }
+ 
+  
 
 
 
@@ -430,7 +1295,7 @@ async function ypContractAddressChanged() {
 }
 
 async function getDAIapproved(userAddress, cowAddress) {
-  let daiApproved = await DAIcontract.methods.allowance(userAddress,cowAddress).call()
+  let daiApproved = await state.DAIcontract.methods.allowance(userAddress,cowAddress).call()
   state.daiApproved = daiApproved;
   return daiApproved;  
 }
@@ -455,7 +1320,7 @@ async function fetchUpdateCreateForm() {
   if (ypamount.value !=  state.ypApproved) {
     let ypapproved = document.getElementById("yp-approved");
     getYPapproved().then( (amount) => {
-      if (amount >= ypamount.value) {
+      if (parseInt(amount) >= parseInt(ypamount.value)) {
       ypapproved.classList.replace("text-danger", "text-success"); 
     } else {
       ypapproved.innerText = `allowance: ${amount}`;
@@ -479,6 +1344,20 @@ async function submittedCreateCow(){
     console.log("tx", tx);
     alert("tx", tx);
   });
+}
+
+async function takeMintDeal(_dealId) {
+  const ethersProvider =  new ethers.providers.Web3Provider(window.ethereum) 
+  let signer = ethersProvider.getSigner();
+  let cowC = new ethers.Contract(state.cowAddress, CCowAbi, ethersProvider);
+  let signedCow = cowC.connect(signer);
+
+  let tx =  signedCow.takeDeal(_dealId);
+  
+  tx.then( (tx) => {
+    console.log("tx", tx);
+  });
+
 }
 
 
@@ -558,6 +1437,7 @@ async function onDisconnect() {
 
   // TODO: Which providers have close method?
   if(provider.close) {
+    let provider = await web3Modal.connect();
     await provider.close();
 
     // If the cached provider is not cleared,
@@ -590,3 +1470,40 @@ window.addEventListener('load', async () => {
   document.querySelector("#btn-connect").addEventListener("click", onConnect);
   document.querySelector("#btn-disconnect").addEventListener("click", onDisconnect);
 });
+
+
+console.log(`%c ________________________________________
+     
+─╓╗┼╓─             ─╓╓╔┬
+────      ┌┼╠╣╣╬╠╓           ╓╠╣╣╣╟┐
+╓╔║╣╣╣╣╣╬╗╓┌ ─╓╠║╣╣╣╣╬╖╓──     ─┼╠║╣╣╣╠┘
+┌║╣╣╣╣╣║╣╣╣╣╣╣╣╣╣╢╣╫╫╫╫╫╫╣╣╬╗╓───┴┴┴┴╙╙╙┴─  ────────────
+┌║╫╣╜╙╙┴┴╙╙╜╠╣╫╫╫╫╫╫╫╫╫╫╫╫╫╫╣╠┼┴┬┴┴┴┴┴┴┴┴──────────┴┴┴┴─
+╜╣╣╣╬┼┬──┴┴┴╟╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╣║┼──────────┴────────────
+╙╠╣╣╣╢╠╠╠╠║╣╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╣╣╜───────────────────┬──
+└╨║╣╣╣╣╣╣╣╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╣╣╜───┴──└┴────┴───────
+╙╨╨╨╢╣╫╫╫╫╫╫╫╫     ╫╫╫╫╣╣╜─┬┴╖║╣╬╗╖╓┴──────
+     ╠╣╫╫╫╫╫   ╫╫  ╫╫╫╫╣╬┼┬┴╓╣    ╣╟┴───
+     ╠╫╫╫╫╫╫  ╫╫╫╫ ╣ ╫╣╬╜┴┴┴╜╣ ╫╫╫ ╫────
+     ╠╫╫╫╫╫╫   ╫╫  ╫╫╣╬╙┴┴┴┴╙╣ ╫╫  ╣┬───
+     ╠╫╫╫╫╫╫╣╣╣╣ ╣╣╣╣╜╙┴┴┴─┴┴╙╜╨╜╜╜╙────
+     ╠╫╫╣╣╣╣╣╢╢╢╣║╨╜╙┴┴────┴┬┴┴┴┴┴┴┴┬───
+     ╜╣╬╩╜╙╙╙╙╙╙╙┴┴┴┴┴┴┴┴┴┴┴┴┴┴────┴─────
+   ─┬┴╜╙┴──────────┴┴──────┴┴─────────────
+   └┴┴───┴╓╖╢╣╣╣╬╗┴───────┬┴╔╗╢╣╣╬╗╓──────
+    ─────╔╟╣     ╫╣╦╓───┬┴╓╢╣     ╫╬──────
+   ──────╙╢╣  ╫╫╫  ╣╣───┴┼║  ╫╫   ╫╣──────
+   ──────┴┴┴╜║╣ ╫╫╫ ╫───╙║╣ ╫  ╣╣╜╙┴──────
+    ────────┴┴╙╜╢╣╣╣╜───┴╙╜╣╣╣╨┴┴┴┴┴──────
+     ─────────┴┴┴┴╙┴┴───┴┴┴┴╙╙┴──────────
+       ─────────────────────────────────
+          ───┬───────────────────┬───
+                ───────────────
+
+^-das ist cow ma'am
++  
+---
+asciiart.club
+---
+Mumbai Cow Contract at:${chainAddresses[80001]['CCContract']}
+`, "font-family:monospace");
